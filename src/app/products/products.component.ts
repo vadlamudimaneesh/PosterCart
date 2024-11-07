@@ -14,13 +14,17 @@ import { BehaviorSubject } from 'rxjs';
 
 export class ProductsComponent implements OnInit{
   marketData: any;
-
+  cartData: any;
+  quantity: any;
 
 
   constructor( private productsService: ProductsService){}
 
   ngOnInit(): void {
     this.getMarketData()
+    this.productsService.cartItems$.subscribe(ele => {
+      this.cartData = ele;
+    })
   }
 
   getMarketData(){
@@ -32,9 +36,14 @@ export class ProductsComponent implements OnInit{
     })
   }
 
-  updateCart(item:any){
-    this.productsService.updateCartData(item);
+  updateCart(item:any, action:Boolean){
+    this.productsService.updateCartData(item, action);
+  }
 
+  getQuantity(name: any){
+    let isQuantityAvailable = this.cartData.find((ele: any) => ele.name == name)
+    return isQuantityAvailable ? isQuantityAvailable.quantity : 0;
+    // this.quantity = this.cartData
   }
 
 }

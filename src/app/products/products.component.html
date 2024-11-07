@@ -1,18 +1,23 @@
-
-
+<i class="fa-solid fa-plus"></i>
+<span class="fa-solid fa-user"></span>
 
 <div *ngIf="marketData" class="list">
-    <div *ngFor="let item of marketData" >
+    <div *ngFor="let item of marketData">
+
         <div class="container">
-            <img src="https://cdn.pixabay.com/photo/2018/01/18/07/31/bitcoin-3089728_1280.jpg" alt="Description of the image">
+            <img src="https://cdn.pixabay.com/photo/2018/01/18/07/31/bitcoin-3089728_1280.jpg"
+                alt="Description of the image">
             <div class="name">{{item.name}}</div>
-            <div class="price"><p>${{item.lastPrice/2}} &nbsp;&nbsp;<del>${{item.lastPrice}} &nbsp;</del> <span class="discount">50% off</span></p></div>
+            <div class="price">
+                <p>${{item.lastPrice/2}}&nbsp;&nbsp;<del>${{item.lastPrice}}</del>&nbsp; <span class="discount">50%
+                        off</span></p>
+            </div>
             <div class="info">Only few left</div>
-            <!-- <div><button>plus</button><button>minus</button></div> -->
-            <button (click)="updateCart(item)">add to cart</button>
+            <div class="button">
+                <div (click)="updateCart(item, true)" class="icon">+</div>
+                <div class="quantity">{{ getQuantity(item.name) }}</div>
+                <div (click)="updateCart(item, false)" class="icon">-</div>
+            </div>
         </div>
     </div>
 </div>
-
-
-

@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductsService {  
   cartItems = new BehaviorSubject<any[]>([])
+  cartItems$ : Observable<any> = this.cartItems.asObservable();
   cartValue: Object = [];
 
   private dataUrl = "https://api.coincentric.net.au/api/v1.0/public/exchange"
@@ -20,24 +21,33 @@ export class ProductsService {
     return this.http.get(this.dataUrl)
   }
 
-  updateCartData(item: any){
+  updateCartData(item: any, action: Boolean){
     const currentCart = this.cartItems.value;
-    console.log(currentCart)
     let isItemAvailable = currentCart.findIndex((cartItem:any) => cartItem.name == item.name)
-    console.log(isItemAvailable, "---------> 27")
     if(isItemAvailable >= 0 ){
-      console.log()
-      currentCart[isItemAvailable].quantity = currentCart[isItemAvailable].quantity + 1;
-      currentCart[isItemAvailable].totalPrice = currentCart[isItemAvailable].quantity * currentCart[isItemAvailable].price
-    }else{
-      let itemData = {
-        name : item.name,
-        price : item.lastPrice,
-        quantity : 1,
-        totalPrice : item.lastPrice
+      if(action){
+        currentCart[isItemAvailable].quantity = currentCart[isItemAvailable].quantity + 1;
+      }else{
+        currentCart[isItemAvailable].quantity = currentCart[isItemAvailable].quantity - 1;
       }
-      currentCart.push(itemData)
-      this.cartItems.next([...currentCart])
+      currentCart[isItemAvailable].totalPrice = currentCart[isItemAvailable].quantity * currentCart[isItemAvailable].price
+      if(currentCart[isItemAvailable].quantity <= 0){
+        const index = currentCart.findIndex(item => item.name === currentCart[isItemAvailable].name);
+        if (index !== -1) {
+          currentCart.splice(index, 1);
+        }
+      }
+    }else{
+      if(action){
+        let itemData = {
+          name : item.name,
+          price : item.lastPrice,
+          quantity : 1,
+          totalPrice : item.lastPrice
+        }
+        currentCart.push(itemData)
+        this.cartItems.next([...currentCart])
+      }
     }
   }
 
