@@ -8,30 +8,11 @@
             <div class="name">{{item.name}}</div>
             <div class="price"><p>${{item.lastPrice/2}} &nbsp;&nbsp;<del>${{item.lastPrice}} &nbsp;</del> <span class="discount">50% off</span></p></div>
             <div class="info">Only few left</div>
-            <button (click)="addToCart(item)">add to cart</button>
+            <!-- <div><button>plus</button><button>minus</button></div> -->
+            <button (click)="updateCart(item)">add to cart</button>
         </div>
     </div>
 </div>
 
-<div *ngIf="cartItems | async as items" class="list">
 
-    <table mat-table [dataSource]="items" class="mat-elevation-z8">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef> quantity </th>
-            <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-        </ng-container>
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef> price </th>
-          <td mat-cell *matCellDef="let element"> {{element.totalPrice}} </td>
-        </ng-container>
-
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-</div>
 
