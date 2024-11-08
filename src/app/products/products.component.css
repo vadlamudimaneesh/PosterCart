@@ -54,7 +54,8 @@ img {
 }
 
 .icon {
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 10px;
     color: #000;
     cursor: pointer;
 }
@@ -63,6 +64,11 @@ img {
     font-weight: 600;
     color: #fe0000;
     cursor: pointer;
+    font-size: 10px;
+}
+
+.quantity {
+    font-weight: 600;
 }
 
 button:hover{

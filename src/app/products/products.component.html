@@ -1,5 +1,5 @@
-<i class="fa-solid fa-plus"></i>
-<span class="fa-solid fa-user"></span>
+
+
 
 <div *ngIf="marketData" class="list">
     <div *ngFor="let item of marketData">
@@ -14,9 +14,9 @@
             </div>
             <div class="info">Only few left</div>
             <div class="button">
-                <div (click)="updateCart(item, true)" class="icon">+</div>
+                <div (click)="updateCart(item, true)" class="icon"><i class="fa-solid fa-plus"></i></div>
                 <div class="quantity">{{ getQuantity(item.name) }}</div>
-                <div (click)="updateCart(item, false)" class="icon">-</div>
+                <div (click)="updateCart(item, false)" class="icon"><i class="fa-solid fa-minus"></i></div>
             </div>
         </div>
     </div>
