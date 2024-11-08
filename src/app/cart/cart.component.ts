@@ -7,13 +7,23 @@ import { ProductsService } from 'src/services/products.service';
 })
 export class CartComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'quantity','price'];
+  displayedColumns: string[] = ['name', 'quantity','price', 'clear'];
   cartItems : any;
 
   constructor( private productsService: ProductsService){}
   ngOnInit(): void {
     this.productsService.cartItems$.subscribe((ele:any) => this.cartItems = ele)
     console.log(this.cartItems)
+  }
+
+  updateCart(item: any,action: any){
+    this.productsService.updateCartData(item,action)
+    console.log(item, action)
+  }
+
+  clearitem(item:any){
+    console.log(item)
+    this.productsService.removeItemFromCart(item);
   }
 
 }

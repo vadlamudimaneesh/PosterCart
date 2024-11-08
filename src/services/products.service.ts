@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { coerceStringArray } from '@angular/cdk/coercion';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,18 @@ export class ProductsService {
     return this.http.get(this.dataUrl)
   }
 
+  removeItemFromCart(item: any){
+    const currentCart = this.cartItems.value;
+    let isItemAvailable = currentCart.findIndex((cartItem:any) => cartItem.name == item.name)
+    if(isItemAvailable >= 0 ){
+      const index = currentCart.findIndex(item => item.name === currentCart[isItemAvailable].name);
+      if (index !== -1) {
+        currentCart.splice(index, 1);
+        this.cartItems.next([...currentCart])
+      }
+    }
+  }
+
   updateCartData(item: any, action: Boolean){
     const currentCart = this.cartItems.value;
     let isItemAvailable = currentCart.findIndex((cartItem:any) => cartItem.name == item.name)
@@ -30,8 +43,8 @@ export class ProductsService {
       }else{
         currentCart[isItemAvailable].quantity = currentCart[isItemAvailable].quantity - 1;
       }
-      currentCart[isItemAvailable].totalPrice = currentCart[isItemAvailable].quantity * currentCart[isItemAvailable].price
-      if(currentCart[isItemAvailable].quantity <= 0){
+      currentCart[isItemAvailable].totalPrice = currentCart[isItemAvailable].quantity * currentCart[isItemAvailable].lastPrice
+      if(currentCart[isItemAvailable].quantity < 1){
         const index = currentCart.findIndex(item => item.name === currentCart[isItemAvailable].name);
         if (index !== -1) {
           currentCart.splice(index, 1);
@@ -39,13 +52,9 @@ export class ProductsService {
       }
     }else{
       if(action){
-        let itemData = {
-          name : item.name,
-          price : item.lastPrice,
-          quantity : 1,
-          totalPrice : item.lastPrice
-        }
-        currentCart.push(itemData)
+        item["quantity"] = 1
+        item["totalPrice"] = item.lastPrice
+        currentCart.push(item)
         this.cartItems.next([...currentCart])
       }
     }

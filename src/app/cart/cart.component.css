@@ -1,0 +1,13 @@
+.icon {
+    font-weight: 500;
+    font-size: 10px;
+    color: #000;
+    cursor: pointer;
+}
+
+.icon:hover {
+    /* font-weight: 600; */
+    color: #fe0000;
+    cursor: pointer;
+    font-size: 10px;
+}
