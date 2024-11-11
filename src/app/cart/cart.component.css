@@ -1,13 +1,100 @@
+/* Heading Style */
+.heading {
+  font-size: 30px;
+  font-family: Poppins;
+  margin: 40px 0 50px 0;
+  text-align: center;
+  color: #1e3c6e;
+}
+
+/* Icon Style */
 .icon {
-    font-weight: 500;
-    font-size: 10px;
-    color: #000;
-    cursor: pointer;
+  font-weight: 500;
+  font-size: 10px;
+  color: #000;
+  cursor: pointer;
 }
 
 .icon:hover {
-    /* font-weight: 600; */
-    color: #fe0000;
-    cursor: pointer;
-    font-size: 10px;
+  color: #fe0000;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+/* Cart Container */
+.cart {
+  max-width: 720px;
+  max-height: 300px; /* Ensure the height is constrained */
+  min-height: 200px;
+  height: 300px; /* Define a height to make scrolling possible */
+  border-radius: 10px;
+  box-shadow: 0px 1px 17px -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 1px 17px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 1px 17px -1px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  font-family: Yellowtail;
+  font-size: 24px;
+  color: #1e3c6e;
+  font-weight: lighter;
+  align-content: center;
+}
+
+/* Empty Cart Message */
+.empty {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/* List of Cart Items */
+.list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column; /* Ensure items are stacked vertically */
+  margin-bottom: 40px;
+  overflow-y: auto; /* Allow scrolling within the table if content overflows */
+}
+
+.totalPrice{
+  font-size: 18px;
+  font-family: Poppins;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.mat-elevation-z8,
+.mat-mdc-elevation-specific.mat-elevation-z8 {
+  box-shadow: none;
+}
+
+.mat-table-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.mat-table-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.mat-table-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+::-webkit-scrollbar {
+  width: 3px;
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #d3cfec;
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6246ea;
+  border-radius: 25px;
+  width: 10px;
 }

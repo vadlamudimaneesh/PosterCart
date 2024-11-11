@@ -1,49 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ProductsService } from 'src/services/products.service';
-import { Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs';
-
-
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-products',            
-  templateUrl: './products.component.html',  
-  styleUrls: ['./products.component.css']    
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css'],
 })
+export class ProductsComponent implements OnInit, AfterViewInit {
+  marketData: any[] = [];
+  cartData: any[] = [];
+  paginatedItems: any[] = [];
+  pageSize = 5;
+  pageIndex = 0;
+  length = 0;
 
-export class ProductsComponent implements OnInit{
-  marketData: any;
-  cartData: any;
-  quantity: any;
-
-
-  constructor( private productsService: ProductsService){}
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.getMarketData()
-    this.productsService.cartItems$.subscribe(ele => {
+    this.getMarketData();
+    this.productsService.cartItems$.subscribe((ele) => {
       this.cartData = ele;
-    })
+    });
   }
 
-  getMarketData(){
-    this.productsService.getData().subscribe(ele => {
-      this.marketData = ele.data.marketData
-      this.marketData.map((ele: { lastPrice: number; }) => {
+  ngAfterViewInit() {
+    if (this.paginator) {
+      this.paginator.length = this.length;
+      this.paginator.pageSize = this.pageSize;
+    }
+  }
+
+  setPaginatedItems() {
+    const startIndex = this.pageIndex * this.pageSize;
+    this.paginatedItems = this.marketData.slice(startIndex, startIndex + this.pageSize);
+    console.log('Paginated Items:', this.paginatedItems);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    console.log('Page Event:', event);
+    this.setPaginatedItems();
+  }
+
+  getMarketData() {
+    this.productsService.getData().subscribe((ele) => {
+      this.marketData = ele.data.marketData || [];
+      this.length = this.marketData.length;
+      this.marketData.forEach((ele: { lastPrice: number }) => {
         ele.lastPrice = Math.floor(Math.random() * 10 + 1) * 10;
-      })
-    })
+      });
+      this.setPaginatedItems();
+    });
   }
 
-  updateCart(item:any, action:Boolean){
+  updateCart(item: any, action: boolean) {
     this.productsService.updateCartData(item, action);
   }
 
-  getQuantity(name: any){
-    let isQuantityAvailable = this.cartData.find((ele: any) => ele.name == name)
-    return isQuantityAvailable ? isQuantityAvailable.quantity : 0;
-    // this.quantity = this.cartData
+  getQuantity(name: string) {
+    const item = this.cartData.find((ele: any) => ele.name === name);
+    return item ? item.quantity : 0;
   }
-
 }

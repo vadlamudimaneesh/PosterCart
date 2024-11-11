@@ -1,5 +1,42 @@
 .active {
-    font-weight: bold;
-    color: blue;
-  }
-  
+  font-weight: bold;
+  color: #1e3c6e;
+}
+
+.header {
+  width: auto;
+  height: 80px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0 20px;
+}
+
+.flex-row{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.title {
+  font-family: Yellowtail;
+  font-size: 36px;
+  color: #1e3c6e;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.header-items {
+  margin: 0 10px;
+  font-size: 16px;
+  color: #1e3c6e;
+  cursor: pointer;
+}

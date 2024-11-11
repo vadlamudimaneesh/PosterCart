@@ -1,18 +1,40 @@
-<div *ngIf="marketData" class="list">
-  <div *ngFor="let item of marketData">
-    <div class="container">
-      <img src="https://cdn.pixabay.com/photo/2018/01/18/07/31/bitcoin-3089728_1280.jpg" alt="Description of the image">
-      <div class="name">{{item.name}}</div>
-      <div class="price">
-        <p>${{item.lastPrice/2}}&nbsp;&nbsp;<del>${{item.lastPrice}}</del>&nbsp; <span class="discount">50%
-            off</span></p>
-      </div>
-      <div class="info">Only few left</div>
-      <div class="button">
-        <div (click)="updateCart(item, true)" class="icon" matTooltip="Add"><i class="fa-solid fa-plus"></i></div>
-        <div class="quantity">{{ getQuantity(item.name) }}</div>
-        <div (click)="updateCart(item, false)" class="icon" matTooltip="Remove"><i class="fa-solid fa-minus"></i></div>
+<div class="productcontainer">
+  <div *ngIf="paginatedItems" class="list">
+    <div *ngFor="let item of paginatedItems">
+      <div class="container">
+        <img
+          src="https://cdn.pixabay.com/photo/2018/01/18/07/31/bitcoin-3089728_1280.jpg"
+          alt="Description of the image"
+        />
+        <div class="name">{{ item.name }}</div>
+        <div class="price">
+          <p>
+            ${{ item.lastPrice / 2 }}&nbsp;&nbsp;<del>${{ item.lastPrice }}</del
+            >&nbsp; <span class="discount">50% off</span>
+          </p>
+        </div>
+        <div class="info">Only few left</div>
+        <div class="button">
+          <div (click)="updateCart(item, true)" class="icon" matTooltip="Add">
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <div class="quantity">{{ getQuantity(item.name) }}</div>
+          <div
+            (click)="updateCart(item, false)"
+            class="icon"
+            matTooltip="Remove"
+          >
+            <i class="fa-solid fa-minus"></i>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
 </div>

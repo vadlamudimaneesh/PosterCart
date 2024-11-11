@@ -1,27 +1,39 @@
-
-<div *ngIf="cartItems" class="list">
-
+<div class="heading">Cart Details</div>
+<div class="cart">
+  <div *ngIf="cartItems.length > 0; else elseTemplate" class="list">
     <table mat-table [dataSource]="cartItems" class="mat-elevation-z8">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef> quantity </th>
-            <td mat-cell *matCellDef="let element" ><span class="icon" (click)="updateCart(element, true)" matTooltip="Add"><i class="fa-solid fa-plus"></i></span> &nbsp;{{element.quantity}}&nbsp; <span class="icon" (click)="updateCart(element, false)" matTooltip="Remove"><i class="fa-solid fa-minus"></i> </span></td>
-        </ng-container>
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef> price </th>
-          <td mat-cell *matCellDef="let element"> {{element.totalPrice}}  </td>
-        </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="icon" (click)="updateCart(element, true)" matTooltip="Add"><i class="fa-solid fa-plus"></i></span>
+          &nbsp;{{element.quantity}}&nbsp;
+          <span class="icon" (click)="updateCart(element, false)" matTooltip="Remove"><i class="fa-solid fa-minus"></i></span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> ${{element.totalPrice}} </td>
+      </ng-container>
+      <ng-container matColumnDef="clear">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" class="icon" (click)="clearitem(element)" matTooltip="Clear">
+          <i class="fa-solid fa-trash"></i>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="clear">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element" class="icon" (click)="clearitem(element)" matTooltip="Clear">  <i class="fa-solid fa-trash"></i> </td>
-          </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <ng-template #elseTemplate>
+    <div class="empty">Empty Cart</div>
+  </ng-template>
+</div>
 
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+<div class="totalPrice"> 
+  Cart Value : <b>${{cartValue}}</b>
 </div>
