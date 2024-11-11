@@ -29,10 +29,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 steps to deploy in github pages
-1.  ng build --base-href "https://vadlamudimaneesh.github.io/angularapp/"
+1.  ng build --base-href "https://vadlamudimaneesh.github.io/PosterCart/"
 
 2.  go to pages and select Source to Deploy from branch. And under branch select the brach where the code need to be build. and select /root and click on save.
 
-3.  npx angular-cli-ghpages --dir=dist/angularapp   ---> this will deploy the code
+3.  npx angular-cli-ghpages --dir=dist/PosterCart   ---> this will deploy the code
 
 3. now select the gh-pages from the branches dropdown and save. This will deploy the code into github pages
