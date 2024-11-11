@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { coerceStringArray } from '@angular/cdk/coercion';
+import { faTachographDigital } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,12 @@ import { coerceStringArray } from '@angular/cdk/coercion';
 export class ProductsService {  
   cartItems = new BehaviorSubject<any[]>([])
   cartItems$ : Observable<any> = this.cartItems.asObservable();
-  cartValue: Object = [];
+  cartValue = new BehaviorSubject<any>(0)
+  cartvalue$ : Observable<any> = this.cartValue.asObservable();
+  counterValue = new BehaviorSubject<any>(0)
+  counterValue$ : Observable<any> = this.counterValue.asObservable();
+
+
 
   private dataUrl = "https://api.coincentric.net.au/api/v1.0/public/exchange"
   private logoUrl = "https://api.coincentric.net.au/api/v1.0/public/getCryptoLogo/?symbol="
@@ -22,7 +28,10 @@ export class ProductsService {
     return this.http.get(this.dataUrl)
   }
 
+
   removeItemFromCart(item: any){
+    let cValue = 0;
+    let counter = 0;
     const currentCart = this.cartItems.value;
     let isItemAvailable = currentCart.findIndex((cartItem:any) => cartItem.name == item.name)
     if(isItemAvailable >= 0 ){
@@ -30,11 +39,21 @@ export class ProductsService {
       if (index !== -1) {
         currentCart.splice(index, 1);
         this.cartItems.next([...currentCart])
+        this.cartItems.subscribe((ele:any)=>{
+        ele.forEach((item:any) => {
+          cValue = cValue + item.totalPrice
+          counter = counter + item.quantity
+        })
+        this.cartValue.next(cValue);
+        this.counterValue.next(counter);
+        })
       }
     }
   }
 
   updateCartData(item: any, action: Boolean){
+    let cValue = 0;
+    let counter = 0;
     const currentCart = this.cartItems.value;
     let isItemAvailable = currentCart.findIndex((cartItem:any) => cartItem.name == item.name)
     if(isItemAvailable >= 0 ){
@@ -50,12 +69,29 @@ export class ProductsService {
           currentCart.splice(index, 1);
         }
       }
+      this.cartItems.next([...currentCart])
+      this.cartItems.subscribe((ele:any)=>{
+      ele.forEach((item:any) => {
+        cValue = cValue + item.totalPrice
+        counter = counter + item.quantity
+      })
+      this.cartValue.next(cValue);
+      this.counterValue.next(counter);
+    })
     }else{
       if(action){
         item["quantity"] = 1
         item["totalPrice"] = item.lastPrice
         currentCart.push(item)
         this.cartItems.next([...currentCart])
+        this.cartItems.subscribe((ele:any)=>{
+          ele.forEach((item:any) => {
+            cValue = cValue + item.totalPrice
+            counter = counter + item.quantity
+          })
+          this.cartValue.next(cValue);
+          this.counterValue.next(counter);
+          })
       }
     }
   }

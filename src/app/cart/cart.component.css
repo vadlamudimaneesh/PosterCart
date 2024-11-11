@@ -64,6 +64,8 @@
   font-family: Poppins;
   margin-top: 20px;
   text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 .mat-elevation-z8,
@@ -72,7 +74,7 @@
 }
 
 .mat-table-wrapper::-webkit-scrollbar {
-  width: 10px;
+  width: 3px;
 }
 
 .mat-table-wrapper::-webkit-scrollbar-track {
@@ -96,5 +98,5 @@
 ::-webkit-scrollbar-thumb {
   background: #6246ea;
   border-radius: 25px;
-  width: 10px;
+  width: 3px;
 }

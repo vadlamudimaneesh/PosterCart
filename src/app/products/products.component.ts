@@ -36,13 +36,13 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   setPaginatedItems() {
     const startIndex = this.pageIndex * this.pageSize;
     this.paginatedItems = this.marketData.slice(startIndex, startIndex + this.pageSize);
-    console.log('Paginated Items:', this.paginatedItems);
+    // console.log('Paginated Items:', this.paginatedItems);
   }
 
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    console.log('Page Event:', event);
+    // console.log('Page Event:', event);
     this.setPaginatedItems();
   }
 
