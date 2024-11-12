@@ -16,7 +16,7 @@
       </ng-container>
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef> Price </th>
-        <td mat-cell *matCellDef="let element"> ${{element.totalPrice}} </td>
+        <td mat-cell *matCellDef="let element"> ${{element.totalPrice/2}} </td>
       </ng-container>
       <ng-container matColumnDef="clear">
         <th mat-header-cell *matHeaderCellDef> </th>
@@ -35,5 +35,5 @@
 </div>
 
 <div class="totalPrice"> 
-  Cart Value : <b>${{cartValue}}</b>
+  Cart Value : <b>${{cartValue/2}}</b>
 </div>
